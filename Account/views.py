@@ -30,6 +30,8 @@ class AccountLogout(View):
     template_name = 'a/logout.html'
 
     def get(self, request, *args, **kwargs):
+        if 'login_status' not in request.session or not request.session['login_status']:
+            return HttpResponseRedirect('/account/login')
         request.session['login_status'] = False
         return render(request, self.template_name)
 
@@ -37,18 +39,8 @@ class AccountLogout(View):
 class AccountDetail(View):
     template_name = 'a/detail.html'
 
+    def get(self, request):
+        if 'login_status' not in request.session or not request.session['login_status']:
+            return HttpResponseRedirect('/account/login')
 
-# todo: service alteration
-class AccountService(View):
-    template_name = 'a/service.html'
-
-
-# todo: show room list
-class AccountRoomList(View):
-    template_name = 'a/roomlist.html'
-
-
-# todo: show interviewee list
-class AccountIntervieweeList(View):
-    template_name = 'a/intervieweelist.html'
-
+        return render(request, self.template_name)

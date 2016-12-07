@@ -20,10 +20,7 @@ from .views import HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # main page
     url(r'^$', HomeView.as_view()),
-    # lead to account page
     url(r'^account/', include('Account.urls')),
-    # lead to room page
     url(r'^room/', include('Room.urls')),
 ]

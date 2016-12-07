@@ -1,17 +1,13 @@
 from django.conf.urls import url
-from .views import AccountLogin, AccountLogout, AccountDetail, AccountService, AccountRoomList
+from .views import AccountLogin, AccountLogout, AccountDetail
 
 
 urlpatterns = [
-    # user login
     url(r'^login$', AccountLogin.as_view()),
-    # user logout
     url(r'^logout$', AccountLogout.as_view()),
-    # user detail
     url(r'^detail$', AccountDetail.as_view()),
-    # service alteration
-    url(r'^service$', AccountService.as_view()),
-    # room list
-    url(r'^roomlist$', AccountRoomList.as_view()),
-
+    # todo: edit room information (change attributes; open or close; add interviewer; add interviewee)
+    # todo: add interviewee
+    # todo: edit interviewee information (change attributes; delete)
+    # todo: alter service (pay fee; expand room numbers)
 ]
