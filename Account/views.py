@@ -9,7 +9,7 @@ class AccountLogin(View):
     template_name = "a/login.html"
 
     def get(self, request, *args, **kwargs):
-        if request.session['login_status']:
+        if 'login_Status' in request.session and request.session['login_status']:
             return HttpResponseRedirect('/account/detail')
         return render(request, self.template_name, {'msg': ''})
 
