@@ -13,12 +13,6 @@ class Manager(models.Model):
     def __str__(self):
         return self.username
 
-    def __int__(self):
-        if self.id:
-            return self.id
-        else:
-            return 1
-
 
 @deconstructible
 class Interviewer(models.Model):
@@ -27,12 +21,6 @@ class Interviewer(models.Model):
     def __str__(self):
         return self.username
 
-    def __int__(self):
-        if self.id:
-            return self.id
-        else:
-            return 1
-
 
 @deconstructible
 class Interviewee(models.Model):
@@ -40,13 +28,7 @@ class Interviewee(models.Model):
     email = models.CharField(max_length=50, default="")
     telephone = models.CharField(max_length=20, default="")
     addr = models.CharField(max_length=200, default="")
-    state = models.BooleanField(default=False)
+    state = models.BooleanField(default=False) # finished or not
 
     def __str__(self):
         return self.username
-
-    def __int__(self):
-        if self.id:
-            return self.id
-        else:
-            return 1

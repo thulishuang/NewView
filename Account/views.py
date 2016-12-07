@@ -43,4 +43,17 @@ class AccountDetail(View):
         if 'login_status' not in request.session or not request.session['login_status']:
             return HttpResponseRedirect('/account/login')
 
+        current_user = Manager.objects.get(username=request.session['username'])
+        userinfo = {
+            'username': current_user.username,
+        }
         return render(request, self.template_name)
+
+class EditRoom(View):
+    template_name = 'a/editroom.html'
+
+    def get(self, request):
+        return
+
+    def post(self, request):
+        return
