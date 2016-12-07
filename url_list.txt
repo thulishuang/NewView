@@ -1,0 +1,16 @@
+说明：
+	此文件格式：
+		链接 ：链接描述
+			get：数据内容（简单字段，字典类型数据用括号包裹，数组用花括号包裹）
+			post：数据内容
+请使用空格作为间隔符。
+
+url:
+	/ : homepage
+	/account/login : login page
+		post : username, password
+	/account/logout : logout page
+	/account/detail : HR detail
+		get : user(username, own_room_num), 
+			roomlist{(title, url, description, interviewer_name}, 
+			interviewee_list{(username, email, telephone, room_title)}
