@@ -6,7 +6,11 @@
 </head>
 <body>
 {{ version }}
+{% if 'login_status' in request.session and request.session.login_status == True %}
+    {{ request.session.username }}
+    <a href="/account/detail">detail</a>
+{% else %}
     <a href="/account/login">login</a>
-    <a href="/account/register">register</a>
+{% endif %}
 </body>
 </html>
