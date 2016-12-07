@@ -2,15 +2,13 @@ from django.db import models
 from Account.models import Manager, Interviewee, Interviewer
 
 
-# Create your models here.
 class Room(models.Model):
-    index = models.IntegerField(default=1)
-    url = models.URLField()  # /room/username/room_title
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=1000)
-    state = models.BooleanField(default=False)  # true: open, false: close
+    url = models.CharField(max_length=200, default="")
+    title = models.CharField(max_length=200, default="")
+    description = models.CharField(max_length=1000, default="")
+    state = models.BooleanField(default=False)
     manager = models.ForeignKey(Manager)
-    interviewer = models.OneToOneField(Interviewer)
+    interviewer = models.OneToOneField(Interviewer, default=Interviewer())
     interviewees = models.ManyToManyField(Interviewee)
 
     def __str__(self):

@@ -9,5 +9,5 @@ urlpatterns = [
     # todo: edit room information (change attributes; open or close; add interviewer; add interviewee)
     # todo: add interviewee
     # todo: edit interviewee information (change attributes; delete)
-    # todo: alter service (pay fee; expand room numbers)
+    # todo: alter service (pay fee; expand room numbers), --currently abandoned
 ]
