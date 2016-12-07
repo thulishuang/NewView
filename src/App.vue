@@ -1,63 +1,81 @@
 <template>
-	<el-row class="panel">
-		<el-col :span="24" class="panel-top">
-      <el-col :span="1"><span>&nbsp</i></span></el-col>
-			<el-col :span="19" style="font-size:26px;">
-				<span>New<i style="color:#20a0ff">View</i></span>
-			</el-col>
-      <el-col :span="2" v-link="{ path: '/home'}" style="font-size:20px;">
-        <span>登录</span>
-      </el-col>
-      <el-col :span="2" style="font-size:20px;">
-        <span>注册</span>
-      </el-col>
-    </el-col>
-  <el-col :span="24" class="panel-center">
-      <el-col :span="24">
-         <img src="./assets/NewView.png" class="bg">
-      </el-col>
-  </el-col>
-
-	</el-row>
-
+	<div id="app">
+		<transition name="bounce">
+			<router-view></router-view>
+		</transition>
+	</div>
 </template>
 
 <script>
-  export default {
-    data() {
 
-    },
+export default {
+  name: 'app',
+  components: {
   }
+}
 </script>
 
-<style scoped>
-	.panel {
+<style>
+	@import "../node_modules/font-awesome/css/font-awesome.min.css";
+	@import "../node_modules/flex.css/dist/flex.css";
+	.bounce-enter-active {
+		animation: bounce-in .5s;
+	}
+	
+	.bounce-leave-active {
+		animation: bounce-out .2s;
+	}
+	
+	@keyframes bounce-in {
+		0% {
+			transform: scale(0);
+		}
+		50% {
+			transform: scale(1.05);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+	
+	@keyframes bounce-out {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(0.95);
+		}
+		100% {
+			transform: scale(0);
+		}
+	}
+	
+	body {
+		/*background-color: #324057;*/
+		margin: 0px;
+		padding: 0px;
+		/*background: url(assets/bg1.jpg) center !important;
+		background-size: cover;*/
+		background: #1F2D3D;
+		font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+		font-weight: 400;
+		-webkit-font-smoothing: antialiased;
+	}
+	
+	#app {
 		position: absolute;
 		top: 0px;
 		bottom: 0px;
 		width: 100%;
-    left:0px;
 	}
-
-	.panel-top {
-		height: 60px;
-		line-height: 60px;
-		background: #2F3D4D;
-    position: absolute;
-		color: #c0ccda;
+	
+	.el-submenu [class^=fa] {
+		vertical-align: baseline;
+		margin-right: 10px;
 	}
-
-	.panel-center {
-		background: #324057;
-		position: absolute;
-		top: 60px;
-		bottom: 0px;
-		overflow: hidden;
+	
+	.el-menu-item [class^=fa] {
+		vertical-align: baseline;
+		margin-right: 10px;
 	}
-
-  .bg {
-    width: 100%;
-    float: left;
-  }
-
 </style>
