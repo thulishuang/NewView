@@ -1,8 +1,8 @@
 {
-  "name": "vueadmin",
+  "name": "NewView",
   "version": "1.0.0",
-  "description": "vue admin project",
-  "author": "taylor <709161610@qq.com>",
+  "description": "vue-django project",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
