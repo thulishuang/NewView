@@ -56,13 +56,7 @@ ROOT_URLCONF = 'NewView.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-<<<<<<< HEAD
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
-=======
         'DIRS': [],
->>>>>>> a7e6c6232573bf26fcf1ca8f0052e5c3f5138c5b
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

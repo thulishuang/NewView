@@ -5,19 +5,6 @@
 			post：数据内容
 请使用空格作为间隔符。
 
-<<<<<<< HEAD
-url:
-	/ : homepage
-	/account/login : login page
-		post : username, password
-	/account/logout : logout page
-	/account/detail : HR detail
-		get : user(username, own_room_num), 
-			roomlist{(title, url, description, interviewer_name}, 
-			interviewee_list{(username, email, telephone, room_title)}
-	
-=======
-
 url(后端api接口):
 	/api/account/login : login page
 		get : 请求参数为空即可，若已登录，返回code=0，否则返回code!=0
@@ -44,4 +31,4 @@ url(后端api接口):
 	/api/accout/detail/interviewee_list/add :
 		post : 添加候选人，请求参数：{username, email, telephone, address}
 		删除成功返回code=0, num，否则返回code!=0
->>>>>>> a7e6c6232573bf26fcf1ca8f0052e5c3f5138c5b
+
