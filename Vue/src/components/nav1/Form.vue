@@ -19,6 +19,8 @@
 				</el-table-column>
 				<el-table-column inline-template :context="_self" label="操作" width="200">
 					<span>
+					<el-button type="text" size="small" @click="handleInvite1(row)">邀请候选人</el-button>
+					<el-button type="text" size="small" @click="handleInvite2(row)">邀请面试官</el-button>
 					<el-button type="text" size="small" @click="handleEdit(row)">编辑</el-button>
 					<el-button type="text" size="small" @click="handleDel(row)">关闭房间</el-button>
 				</span>
@@ -148,6 +150,12 @@
 				this.editForm.personB=row.personB;
 				this.editForm.state=row.state;
 			},
+			//邀请候选人
+			handleInvite1:function(row){
+			},
+			//邀请面试官
+			handleInvite2:function(row){
+			},			
 			//编辑 or 新增
 			editSubmit:function(){
 				var _this=this;

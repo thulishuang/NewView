@@ -28,6 +28,7 @@
 					<span>
 					<el-button type="text" size="small" @click="handleEdit(row)">编辑</el-button>
 					<el-button type="text" size="small" @click="handleDel(row)">删除</el-button>
+					<el-button type="text" size="small" @click="handleView(row)">查看面试报告</el-button>
 				</span>
 				</el-table-column>
 			</el-table>
@@ -179,6 +180,9 @@
 				}).catch(() => {
 							
 				});
+			},
+			//查看面试报告
+			handleView:function(){
 			},
 			//显示编辑界面
 			handleEdit:function(row){
