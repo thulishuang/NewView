@@ -1,3 +1,7 @@
+.DS_Store
+node_modules/
+npm-debug.log
+.editorconfig
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
