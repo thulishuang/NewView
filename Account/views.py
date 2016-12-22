@@ -1,57 +1,69 @@
-from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.core.exceptions import *
 from .models import Manager
-from Room.models import Room
+
+# Use request.session['status'] to record user status
+# Use request.session['username'] to record user name
 
 
-class AccountLogin(View):
-    template_name = "a/login.html"
+class Login(View):
+    def get(self, request):
+        if 'status' in request.session:
+            if request.session['status']:
+                return
+        raise ValidationError("no user log in")
 
-    def get(self, request, *args, **kwargs):
-        if 'login_Status' in request.session and request.session['login_status']:
-            return HttpResponseRedirect('/account/detail')
-        return render(request, self.template_name, {'msg': ''})
-
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
         try:
-            Manager.objects.get(username=username, password=password)
-            request.session['login_status'] = True
+            user = Manager.objects.get(username=username, password=password)
+            request.session['status'] = True
             request.session['username'] = username
-            return HttpResponseRedirect('/account/detail')
-
+            return
         except Manager.DoesNotExist:
-            return render(request, self.template_name, {'msg': "invalid username or password"})
+            raise ValidationError("wrong username or password")
 
 
-class AccountLogout(View):
-    template_name = 'a/logout.html'
+class Logout(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            request.session['status'] = False
+            request.session['username'] = ''
+        except:
+            raise ValidationError("failed to log user out")
 
-    def get(self, request, *args, **kwargs):
-        if 'login_status' not in request.session or not request.session['login_status']:
-            return HttpResponseRedirect('/account/login')
-        request.session['login_status'] = False
-        return render(request, self.template_name)
 
-
-class AccountDetail(View):
-    template_name = 'a/detail.html'
-
+class RoomList(View):
     def get(self, request):
-        if 'login_status' not in request.session or not request.session['login_status']:
-            return HttpResponseRedirect('/account/login')
+        return
 
-        current_user = Manager.objects.get(username=request.session['username'])
-        userinfo = {
-            'username': current_user.username,
-        }
-        return render(request, self.template_name)
 
-class EditRoom(View):
-    template_name = 'a/editroom.html'
+class CloseRoom(View):
+    def get(self, request):
+        return
 
+    def post(self, request):
+        return
+
+
+class IntervieweeList(View):
+    def get(self, request):
+        return
+
+    def post(self, request):
+        return
+
+
+class DeleteInterviewee(View):
+    def get(self, request):
+        return
+
+    def  post(self, request):
+        return
+
+
+class AddInterviewee(View):
     def get(self, request):
         return
 

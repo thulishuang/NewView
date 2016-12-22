@@ -1,14 +1,11 @@
 from django.conf.urls import url
-from .views import AccountLogin, AccountLogout, AccountDetail, EditRoom
+from .views import *
 
 
 urlpatterns = [
-    url(r'^login$', AccountLogin.as_view()),
-    url(r'^logout$', AccountLogout.as_view()),
-    url(r'^detail$', AccountDetail.as_view()),
-    # todo: edit room information (change attributes; open or close; add interviewer; add interviewee)
-    url(r'^editroom/', EditRoom.as_view()),
-    # todo: add interviewee
-    # todo: edit interviewee information (change attributes; delete)
-    # todo: alter service (pay fee; expand room numbers), --currently abandoned
+    url(r'^login$', Login.as_view(), name="login"),
+    url(r'^logout$', Logout.as_view(), name="logout"),
+    url(r'^detail/room_list$', RoomList.as_view(), name="roomlist"),
+    url(r'^detail/room_list/close$', CloseRoom.as_view(), name="closeroom"),
+    url(r'^detail/interviewee_list$', IntervieweeList.as_view(), name="intervieweelist"),
 ]

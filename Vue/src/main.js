@@ -10,7 +10,6 @@ import 'nprogress/nprogress.css'
 
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
-import Main from './components/Main.vue'
 import Table from './components/nav1/Table.vue'
 import Form from './components/nav1/Form.vue'
 import Page3 from './components/nav1/Page3.vue'
