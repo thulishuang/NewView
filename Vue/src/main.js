@@ -84,6 +84,14 @@ new Vue({
   //render: h => h(Login)
 }).$mount('#app')
 
-router.replace('/login')
+$.get("/api/account/login",{},
+    function(data,status){
+      if (data['error_code'] == 0) {
+        _this.$router.replace('/table');
+      }
+      else {
+        router.replace('/login')
+      }              
+    });
 
 

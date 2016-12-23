@@ -15,23 +15,7 @@
 			</el-col>
 		</el-col>
 		<el-col :span="24" class="panel-center">
-			<!--<el-col :span="4">-->
 			<aside style="width:230px;">
-				<!--<el-menu style="border-top: 1px solid #475669;" default-active="/table" class="el-menu-vertical-demo" @open="handleopen"
-					@close="handleclose" @select="handleselect" theme="dark" unique-opened router>
-					<el-submenu index="1">
-						<template slot="title"><i class="el-icon-message"></i>导航一</template>
-						<el-menu-item index="/table">Table</el-menu-item>
-						<el-menu-item index="/form">Form</el-menu-item>
-						<el-menu-item index="/page3">页面3</el-menu-item>
-					</el-submenu>
-					<el-submenu index="2">
-						<template slot="title"><i class="fa fa-id-card-o"></i>导航二</template>
-						<el-menu-item index="/page4">选项4</el-menu-item>
-						<el-menu-item index="/page5">选项5</el-menu-item>
-					</el-submenu>
-					<el-menu-item index="/page6"><i class="fa fa-line-chart"></i>导航三</el-menu-item>
-				</el-menu>-->
 				<el-menu style="border-top: 1px solid #475669;" default-active="/table" class="el-menu-vertical-demo" @open="handleopen"
 					@close="handleclose" @select="handleselect" theme="dark" unique-opened router>
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
@@ -43,8 +27,6 @@
 					</template>
 				</el-menu>
 			</aside>
-			<!--</el-col>-->
-			<!--<el-col :span="20" class="panel-c-c">-->
 			<section class="panel-c-c">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" style="margin-bottom:15px;">
@@ -56,62 +38,77 @@
 					</el-col>
 				</div>
 			</section>
-			<!--</el-col>-->
 		</el-col>
 	</el-row>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-		  currentPathName:'Table',
-		  currentPathNameParent:'导航一',
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
-      }
-    },
+	import $ from 'jquery'
+	export default {
+		data() {
+			return {
+			currentPathName:'Table',
+			currentPathNameParent:'导航一',
+				form: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				}
+			}
+		},
 	watch: {
 		'$route' (to, from) {//监听路由改变
 			this.currentPathName=to.name;
 			this.currentPathNameParent=to.matched[0].name;
 		}
 	},
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-      },
+		methods: {
+			onSubmit() {
+				console.log('submit!');
+			},
 			handleopen(){
 				//console.log('handleopen');
 			},
 			handleclose(){
 				//console.log('handleclose');
 			},
-            handleselect:function(a,b){
-            },
+						handleselect:function(a,b){
+						},
 			//退出登录
 			logout:function(){
 				var _this=this;
 				this.$confirm('确认退出吗?', '提示', {
 					//type: 'warning'
 				}).then(() => {
-					_this.$router.replace('/login');
+					$.post("/api/account/logout",{},
+							function(data,status){
+								if (data['error_code'] == 0) {
+									_this.$router.replace('/login');
+								}
+								else {
+									_this.$confirm('登出错误', '提示', {
+										//type: 'warning'
+									}).then(() => {
+
+									}).catch(() => {
+												
+									});
+									return false;
+								}              
+							});
 				}).catch(() => {
-							
+					
 				});
 
 				
 			}
-    }
-  }
+		}
+	}
 </script>
 
 <style scoped>

@@ -16,8 +16,8 @@ def login(request):
                'error_code': 0
             }, status=status.HTTP_200_OK)
         return Response(data={
-            'error_code': 0
-        }, status=status.HTTP_204_NO_CONTENT)
+            'error_code': 1
+        }, status=status.HTTP_200_OK)
 
     elif request.method == "POST":
         username = request.data['username']
