@@ -1,5 +1,6 @@
-from django.http import HttpResponse
-from django.core.exceptions import *
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .models import Manager
 from .serializer import ManagerSerializer
 
@@ -7,21 +8,19 @@ from .serializer import ManagerSerializer
 # Use request.session['username'] to record user name
 
 
+@api_view(['GET', 'POST'])
 def login(request):
     if request.method == "GET":
-        if 'status' in request.session:
-            if request.session['status']:
-                return HttpResponse("logged", status=200)
-        return HttpResponse("none", status=401)
+        if request.user:
+            return Response(data="authenticated", status=status.HTTP_200_OK)
+        return Response(data="unauthenticated", status=status.HTTP_401_UNAUTHORIZED)
 
     elif request.method == "POST":
-        serializer = ManagerSerializer(data=request.data)
+        serializer = ManagerSerializer(request.data)
         if serializer.is_valid():
-            request.session['status'] = True
-            request.session['username'] = request.POST['username']
-            return HttpResponse("logged", status=200)
+            return Response(data="authenticated", status=status.HTTP_200_OK)
         else:
-            return HttpResponse("none", status=401)
+            return Response(data="unauthenticated", status=status.HTTP_401_UNAUTHORIZED)
 
 
 def logout(request):
