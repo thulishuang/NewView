@@ -14,7 +14,7 @@ url(后端api接口):
 	/api/account/detail/room_list : roomlist detail
 		get : 请求参数为空，返回数据格式
 			{
-				user(username),
+				user(username, room_num),
 				roomlist{(num, title, description, state, interviewer_name}, 
 			}
 		post : 修改房间信息，请求参数： {roomnum, title, description}, 编辑成功返回code=0，否则返回code!=0
