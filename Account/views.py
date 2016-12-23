@@ -13,19 +13,29 @@ def login(request):
     if request.method == "GET":
         if request.user:
             return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == "POST":
-        username = request.META.get('username')
-        print(request.data['username'])
-        return Response(status=status.HTTP_200_OK)
+        username = request.data['username']
+        password = request.data['password']
+        try:
+            user = Manager.objects.get(username=username, password=password)
+            request.user = user
+            return Response(status=status.HTTP_202_ACCEPTED)
+        except Manager.DoesNotExist:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 def logout(request):
-    return
+    try:
+        request.user = None
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_410_GONE)
 
 
 def room_list(request):
+
     return
 
 
