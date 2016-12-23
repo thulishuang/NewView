@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import $ from 'jquery'
   export default {
     data() {
       return {
@@ -37,15 +38,24 @@
       },
       handleSubmit2(ev) {
         var _this=this;
-        this.$refs.ruleForm2.validate((valid) => {
-          if (valid) {
-            //_this.$router.push('/table');
-            _this.$router.replace('/table');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+        $.post("/api/account/login",
+            {
+              username:this.ruleForm2['account'],
+              password:this.ruleForm2['checkPass'],
+            },
+            function(data){
+              alert("数据：" + data);
+              console.log(data)
+            });
+        // this.$refs.ruleForm2.validate((valid) => {
+        //   if (valid) {
+        //     //_this.$router.push('/table');
+        //     _this.$router.replace('/table');
+        //   } else {
+        //     console.log('error submit!!');
+        //     return false;
+        //   }
+        // });
       }
     }
   }
