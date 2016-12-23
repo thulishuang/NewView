@@ -7,7 +7,7 @@ class Room(models.Model):
     title = models.CharField(max_length=200, default="")
     description = models.CharField(max_length=1000, default="")
     state = models.BooleanField(default=False)
-    manager = models.ForeignKey(Manager)
+    manager = models.OneToOneField(Manager)
     interviewer = models.OneToOneField(Interviewer, default=Interviewer())
     interviewees = models.ManyToManyField(Interviewee)
 
