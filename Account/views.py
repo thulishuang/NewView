@@ -1,7 +1,6 @@
-from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Manager
+from .models import Manager, Interviewee
 from Room.models import Room
 
 # Use request.session['status'] to record user status
@@ -14,7 +13,7 @@ def login(request):
         if request.user:
             return Response(data={
                'error_code': 0
-            }, status=status.HTTP_200_OK)
+            }, status=200)
         return Response(data={
             'error_code': 1
         }, status=status.HTTP_200_OK)
@@ -27,11 +26,11 @@ def login(request):
             request.user = user
             return Response(data={
                 'error_code': 0
-            }, status=status.HTTP_202_ACCEPTED)
+            }, status=202)
         except Manager.DoesNotExist:
             return Response(data={
                'error_code': 1
-            }, status=status.HTTP_202_ACCEPTED)
+            }, status=202)
 
 
 @api_view(['POST'])
@@ -40,11 +39,11 @@ def logout(request):
         request.user = None
         return Response(data={
             'error_code': 0
-        }, status=status.HTTP_200_OK)
+        }, status=200)
     except:
         return Response(data={
             'error_code': 1
-        }, status=status.HTTP_410_GONE)
+        }, status=410)
 
 
 @api_view(['GET', 'POST'])
@@ -68,7 +67,7 @@ def room_list(request):
         return Response(data={
             'user': user_data,
             'roomlist': room_data
-        }, status=status.HTTP_200_OK)
+        }, status=200)
 
     elif request.method == "POST":
         post_data = {
@@ -83,24 +82,87 @@ def room_list(request):
             room.save()
             return Response(data={
                 'error_code': 0
-            }, status=status.HTTP_200_OK)
+            }, status=200)
         except:
             return Response(data={
                 'error_code': 1
-            }, status=status.HTTP_200_OK)
+            }, status=200)
 
 
+@api_view(['POST'])
 def close_room(request):
-    return
+    roomnum = int(request.data['roomnum'])
+    room = Room.objects.get(pk=roomnum)
+    try:
+        room.state = False
+        room.save()
+        return Response(data={
+            'error_code': 0
+        }, status=200)
+    except:
+        return Response(data={
+            'error_code': 1
+        }, status=200)
 
 
+@api_view(['GET', 'POST'])
 def interviewee_list(request):
-    return
+    if request.method == 'GET':
+        user = request.user
+        room_list = Room.objects.filter(manager=user)
+        interviewee_list = []
+        for r in room_list:
+            for i in r.interviewees.all():
+                interviewee_list.append({
+                    'num': i.id,
+                    'username': i.username,
+                    'email': i.email,
+                    'telephone': i.telephone,
+                    'address': i.addr,
+                    'state': i.state
+                })
+        return Response(data={
+            'interviewee_list': interviewee_list
+        }, status=200)
+
+    elif request.method == 'POST':
+        post_data = {
+            'num': int(request.data['num']),
+            'username': request.data['username'],
+            'email': request.data['email'],
+            'telephone': request.data['telephone'],
+            'address': request.data['address']
+        }
+        interviewee = Interviewee.objects.get(pk=post_data['num'])
+        try:
+            interviewee.username = post_data['username']
+            interviewee.email = post_data['email']
+            interviewee.telephone = post_data['telephone']
+            interviewee.addr = post_data['address']
+            interviewee.save()
+            return Response(data={
+                'error_code': 0
+            }, status=200)
+        except:
+            return Response(data={
+                'error_code': 1
+            }, status=200)
 
 
 def delete_interviewee(request):
-    return
+    num = request.data['data']
+    interviewee = Interviewee.objects.get(pk=num)
+    try:
+        interviewee.delete()
+        return Response(data={
+            'error_code': 0
+        }, status=200)
+    except:
+        return Response(data={
+            'error_code': 1
+        }, status=200)
 
 
 def add_interviewee(request):
+
     return
