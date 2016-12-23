@@ -1,71 +1,52 @@
-from django.views import View
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import render_to_response
 from django.core.exceptions import *
 from .models import Manager
+from .serializer import ManagerSerializer
 
 # Use request.session['status'] to record user status
 # Use request.session['username'] to record user name
 
 
-class Login(View):
-    def get(self, request):
+@api_view(['GET', 'POST'])
+def login(request):
+    if request.method == "GET":
         if 'status' in request.session:
             if request.session['status']:
-                return
-        raise ValidationError("no user log in")
+                return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTPP_401_UNAUTHORIZED)
 
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            user = Manager.objects.get(username=username, password=password)
+    elif request.method == "POST":
+        serializer = ManagerSerializer(data=request.data)
+        if serializer.is_valid():
             request.session['status'] = True
-            request.session['username'] = username
-            return
-        except Manager.DoesNotExist:
-            raise ValidationError("wrong username or password")
+            request.session['username'] = request.POST['username']
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
-class Logout(View):
-    def post(self, request, *args, **kwargs):
-        try:
-            request.session['status'] = False
-            request.session['username'] = ''
-        except:
-            raise ValidationError("failed to log user out")
+def logout(request):
+    return
 
 
-class RoomList(View):
-    def get(self, request):
-        return
+def room_list(request):
+    return
 
 
-class CloseRoom(View):
-    def get(self, request):
-        return
-
-    def post(self, request):
-        return
+def close_room(request):
+    return
 
 
-class IntervieweeList(View):
-    def get(self, request):
-        return
-
-    def post(self, request):
-        return
+def interviewee_list(request):
+    return
 
 
-class DeleteInterviewee(View):
-    def get(self, request):
-        return
-
-    def  post(self, request):
-        return
+def delete_interviewee(request):
+    return
 
 
-class AddInterviewee(View):
-    def get(self, request):
-        return
-
-    def post(self, request):
-        return
+def add_interviewe(request):
+    return
