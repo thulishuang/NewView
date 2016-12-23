@@ -12,15 +12,13 @@ from .serializer import ManagerSerializer
 def login(request):
     if request.method == "GET":
         if request.user:
-            return Response(data="authenticated", status=status.HTTP_200_OK)
-        return Response(data="unauthenticated", status=status.HTTP_401_UNAUTHORIZED)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     elif request.method == "POST":
-        serializer = ManagerSerializer(request.data)
-        if serializer.is_valid():
-            return Response(data="authenticated", status=status.HTTP_200_OK)
-        else:
-            return Response(data="unauthenticated", status=status.HTTP_401_UNAUTHORIZED)
+        username = request.META.get('username')
+        print(request.data['username'])
+        return Response(status=status.HTTP_200_OK)
 
 
 def logout(request):
