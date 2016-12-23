@@ -22,9 +22,9 @@ def login(request):
         try:
             user = Manager.objects.get(username=username, password=password)
             request.user = user
-            return Response(data=AuthenticationSerializer(error_code=0).data,status=status.HTTP_202_ACCEPTED)
+            return Response(data=0,status=status.HTTP_202_ACCEPTED)
         except Manager.DoesNotExist:
-            return Response(data=AuthenticationSerializer(error_code=1).data ,status=status.HTTP_202_ACCEPTED)
+            return Response(data=1,status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['POST'])
