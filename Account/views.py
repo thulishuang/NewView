@@ -1,5 +1,4 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render_to_response
 from django.core.exceptions import *
@@ -10,7 +9,6 @@ from .serializer import ManagerSerializer
 # Use request.session['username'] to record user name
 
 
-@api_view(['GET', 'POST'])
 def login(request):
     if request.method == "GET":
         if 'status' in request.session:
