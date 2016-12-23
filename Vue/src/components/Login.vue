@@ -43,19 +43,15 @@
               username:this.ruleForm2['account'],
               password:this.ruleForm2['checkPass'],
             },
-            function(data){
-              alert("数据：" + data);
-              console.log(data)
+            function(data,status){
+              if (status == 'success') {
+                _this.$router.replace('/table');
+              }
+              else {
+                console.log('error submit!!');
+                return false;
+              }              
             });
-        // this.$refs.ruleForm2.validate((valid) => {
-        //   if (valid) {
-        //     //_this.$router.push('/table');
-        //     _this.$router.replace('/table');
-        //   } else {
-        //     console.log('error submit!!');
-        //     return false;
-        //   }
-        // });
       }
     }
   }
