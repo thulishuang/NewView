@@ -2,7 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Manager
-from .serializer import ManagerSerializer
+from Room.models import Room
+from .serializer import ManagerSerializer, AuthenticationSerializer
 
 # Use request.session['status'] to record user status
 # Use request.session['username'] to record user name
@@ -21,11 +22,12 @@ def login(request):
         try:
             user = Manager.objects.get(username=username, password=password)
             request.user = user
-            return Response(status=status.HTTP_202_ACCEPTED)
+            return Response(data=AuthenticationSerializer(error_code=0).data,status=status.HTTP_202_ACCEPTED)
         except Manager.DoesNotExist:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data=AuthenticationSerializer(error_code=1).data ,status=status.HTTP_202_ACCEPTED)
 
 
+@api_view(['POST'])
 def logout(request):
     try:
         request.user = None
@@ -34,9 +36,16 @@ def logout(request):
         return Response(status=status.HTTP_410_GONE)
 
 
+@api_view(['GET', 'POST'])
 def room_list(request):
+    if request.method == "GET":
+        user = request.user
+        user_data = {
+            'username': user.username,
+            'own_room_num': user.own_room_num,
+        }
 
-    return
+        return Response(status=status.HTTP_200_OK)
 
 
 def close_room(request):

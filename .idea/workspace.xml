@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77b53d6c-6752-4ec4-8345-9db401bde1ff" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Account/authentication.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/models.py" afterPath="$PROJECT_DIR$/Account/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/serializer.py" afterPath="$PROJECT_DIR$/Account/serializer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/views.py" afterPath="$PROJECT_DIR$/Account/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Room/models.py" afterPath="$PROJECT_DIR$/Room/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/url_list.txt" afterPath="$PROJECT_DIR$/url_list.txt" />
     </list>
     <ignored path="NewView.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +39,7 @@
     <favorites_list name="NewView" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.48729184">
+    <splitter split-orientation="horizontal" split-proportion="0.68193835">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
@@ -51,11 +57,11 @@
           <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Account/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="289">
-                  <caret line="23" column="60" lean-forward="false" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+                <state relative-caret-position="357">
+                  <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#33#0" expanded="true" />
-                    <element signature="e#197#250#0" expanded="true" />
+                    <element signature="e#252#305#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -64,8 +70,8 @@
           <file leaf-file-name="serializer.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Account/serializer.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+                <state relative-caret-position="187">
+                  <caret line="11" column="52" lean-forward="true" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
                   <folding>
                     <element signature="e#0#38#0" expanded="true" />
                   </folding>
@@ -76,21 +82,9 @@
           <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/NewView/settings.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2295">
+                <state relative-caret-position="584">
                   <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="authentication.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Account/authentication.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="9" column="24" lean-forward="false" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-                  <folding>
-                    <element signature="e#0#41#0" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -101,11 +95,23 @@
         <splitter split-orientation="vertical" split-proportion="0.5">
           <split-first>
             <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-              <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+              <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/Account/models.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="204">
-                      <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                    <state relative-caret-position="153">
+                      <caret line="9" column="49" lean-forward="true" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+                      <folding>
+                        <element signature="e#0#28#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/Room/models.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="357">
+                      <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
                       <folding>
                         <element signature="e#0#28#0" expanded="true" />
                       </folding>
@@ -120,8 +126,8 @@
               <file leaf-file-name="url_list.txt" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/url_list.txt">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="391">
-                      <caret line="27" column="48" lean-forward="false" selection-start-line="27" selection-start-column="48" selection-end-line="27" selection-end-column="48" />
+                    <state relative-caret-position="170">
+                      <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
                       <folding />
                     </state>
                   </provider>
@@ -158,8 +164,6 @@
         <option value="$PROJECT_DIR$/templates/a/detail.html" />
         <option value="$PROJECT_DIR$/Room/admin.py" />
         <option value="$PROJECT_DIR$/Account/admin.py" />
-        <option value="$PROJECT_DIR$/Room/models.py" />
-        <option value="$PROJECT_DIR$/Account/models.py" />
         <option value="D:/CodeSpace/Python/Compiler/yacc_demo.py" />
         <option value="D:/CodeSpace/Python/Compiler/__init__.py" />
         <option value="D:/CodeSpace/Python/Compiler/calclex.py" />
@@ -184,15 +188,17 @@
         <option value="D:/CodeSpace/Python/Compiler/lexer.py" />
         <option value="D:/CodeSpace/Python/Compiler/node.py" />
         <option value="D:/CodeSpace/Python/Compiler/yaccer.py" />
-        <option value="$PROJECT_DIR$/url_list.txt" />
         <option value="$PROJECT_DIR$/NewView/urls.py" />
         <option value="$PROJECT_DIR$/NewView/views.py" />
         <option value="$PROJECT_DIR$/Vue/src/main.js" />
-        <option value="$PROJECT_DIR$/Account/serializer.py" />
         <option value="$PROJECT_DIR$/Account/urls.py" />
         <option value="$PROJECT_DIR$/Account/authentication.py" />
         <option value="$PROJECT_DIR$/NewView/settings.py" />
         <option value="$PROJECT_DIR$/Vue/package.json" />
+        <option value="$PROJECT_DIR$/Account/models.py" />
+        <option value="$PROJECT_DIR$/Room/models.py" />
+        <option value="$PROJECT_DIR$/url_list.txt" />
+        <option value="$PROJECT_DIR$/Account/serializer.py" />
         <option value="$PROJECT_DIR$/Account/views.py" />
       </list>
     </option>
@@ -292,6 +298,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NewView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NewView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Room" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -685,14 +705,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/CodeSpace/Python/Compiler/yacc_demo.py" />
-    <entry file="file://D:/CodeSpace/Python/Compiler/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/CodeSpace/Python/Compiler/calclex.py" />
     <entry file="file://D:/CodeSpace/Python/Compiler/parse_yacc.py" />
     <entry file="file://D:/CodeSpace/Python/Compiler/demo.py" />
@@ -853,29 +865,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/url_list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="48" lean-forward="false" selection-start-line="27" selection-start-column="48" selection-end-line="27" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Account/forms.py" />
     <entry file="file://$PROJECT_DIR$/Account/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Account/authentication.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="24" lean-forward="false" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -885,24 +879,6 @@
           <caret line="11" column="55" lean-forward="false" selection-start-line="11" selection-start-column="55" selection-end-line="11" selection-end-column="55" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NewView/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2295">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Account/serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -939,23 +915,75 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Room/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Account/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="9" column="49" lean-forward="true" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Room/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/url_list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Account/authentication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="24" lean-forward="false" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NewView/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Account/serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="52" lean-forward="true" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Account/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="60" lean-forward="false" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+        <state relative-caret-position="357">
+          <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
-            <element signature="e#197#250#0" expanded="true" />
+            <element signature="e#252#305#0" expanded="true" />
           </folding>
         </state>
       </provider>

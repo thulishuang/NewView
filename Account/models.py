@@ -28,7 +28,7 @@ class Interviewee(models.Model):
     email = models.CharField(max_length=50, default="")
     telephone = models.CharField(max_length=20, default="")
     addr = models.CharField(max_length=200, default="")
-    state = models.BooleanField(default=False) # finished or not
+    state = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

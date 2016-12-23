@@ -50,7 +50,7 @@
                 _this.$router.replace('/table');
               }
               else {
-                console.log('error submit!!');
+                alert('error submit!!');
                 return false;
               }              
             });
