@@ -44,6 +44,8 @@
               password:this.ruleForm2['checkPass'],
             },
             function(data,status){
+              console.log(data)
+              console.log(status)
               if (status == 'success') {
                 _this.$router.replace('/table');
               }

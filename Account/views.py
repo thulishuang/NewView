@@ -11,17 +11,17 @@ def login(request):
     if request.method == "GET":
         if 'status' in request.session:
             if request.session['status']:
-                return HttpResponse("logged", type="text/plain", status=200)
-        return HttpResponse("none", type="text/plain", status=401)
+                return HttpResponse("logged", status=200)
+        return HttpResponse("none", status=401)
 
     elif request.method == "POST":
         serializer = ManagerSerializer(data=request.data)
         if serializer.is_valid():
             request.session['status'] = True
             request.session['username'] = request.POST['username']
-            return HttpResponse("logged", type="text/plain", status=200)
+            return HttpResponse("logged", status=200)
         else:
-            return HttpResponse("none", type="text/plain", status=401)
+            return HttpResponse("none", status=401)
 
 
 def logout(request):
