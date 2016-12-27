@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
@@ -7,6 +8,7 @@ import store from './vuex/store'
 import Vuex from 'vuex'
 import NProgress from 'nprogress'//页面顶部进度条
 import 'nprogress/nprogress.css'
+import $ from 'jquery'
 
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
