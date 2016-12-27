@@ -20,7 +20,9 @@
 				</el-table-column>
 				<el-table-column prop="phonenumber" label="手机号码" width="180">
 				</el-table-column>
-				<el-table-column prop="addr" label="地址" width="250">
+				<el-table-column prop="addr" label="地址" width="200">
+				</el-table-column>
+				<el-table-column prop="room" label="房间号" width="100">
 				</el-table-column>
 				<el-table-column prop="state" label="状态">
 				</el-table-column>
@@ -49,6 +51,9 @@
 				<el-form-item label="地址">
 					<el-input type="textarea" v-model="editForm.addr"></el-input>
 				</el-form-item>
+				<el-form-item label="房间号">
+					<el-input type="textarea" v-model="editForm.room"></el-input>
+				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click.native="editFormVisible = false">取消</el-button>
@@ -59,7 +64,14 @@
 </template>
 
 <script>
-
+	import $ from 'jquery'
+	import NProgress from 'nprogress'//页面顶部进度条
+	import 'nprogress/nprogress.css'
+	$.get("/api/account/detail/interviewee_list",{},
+	        function(data,status){
+	          console.log(status)
+	          this.tableData = data['interviewee_list'];
+	        });
   export default {
     data() {
       return {
@@ -77,6 +89,7 @@
 				//编辑界面数据
 				editForm: {
 					id:0,
+					room:'',
 					name: '',
 					mail: '',
 					phonenumber:'',
@@ -96,6 +109,7 @@
 					mail: 'ayashinta@gmail.com',
 					phonenumber: '184********',
 					addr:'北京清华大学',
+					room:'sss',
 					state:'未邀请'
 				}, {
 					id:1001,
@@ -160,29 +174,45 @@
 				}).then(() => {
 					_this.listLoading=true;
 					NProgress.start();
-					setTimeout(function(){
-						for(var i=0;i<_this.tableData.length;i++){
-							if(_this.tableData[i].id==row.id){
-								_this.tableData.splice(i,1);
-
-								_this.listLoading=false;
-								NProgress.done();
-								_this.$notify({
-									title: '成功',
-									message: '删除成功',
-									type: 'success'
-								});
-
-								break;
-							}
-						}
-					},1000);
+					$.post("/api/account/detail/interviewee_list",
+					  {
+					    data:row.id,
+					  },
+					  function(data,status){
+					    if (data['error_code'] == 0) {
+					      _this.$router.replace('/interviewee');
+					      _this.editLoading=false;
+					      NProgress.done();
+					      _this.btnEditText='删 除';
+					      _this.$notify({
+					        title: '成功',
+					        message: '删除成功',
+					        type: 'success'
+					      });
+					      _this.editFormVisible = false;
+					      $.get("/api/account/detail/interviewee_list",{},
+					              function(data,status){
+					                console.log(status)
+					                this.tableData = data['interviewee_list'];
+					              }); 
+					    }
+					    else {
+					      _this.$notify({
+					        title: '失败',
+					        message: '删除失败',
+					        type: 'fail'
+					      });
+					      return false;
+					    }              
+					  });
 				}).catch(() => {
 							
 				});
 			},
+
 			//查看面试报告
 			handleView:function(){
+				//TODO
 			},
 			//显示编辑界面
 			handleEdit:function(row){
@@ -206,44 +236,42 @@
 							_this.editLoading=true;
 							NProgress.start();
 							_this.btnEditText='提交中';
-							setTimeout(function(){
-								_this.editLoading=false;
-								NProgress.done();
-								_this.btnEditText='提 交';
-								_this.$notify({
-									title: '成功',
-									message: '提交成功',
-									type: 'success'
-								});
-								_this.editFormVisible = false;
-
-								if(_this.editForm.id==0){
-									//新增
-									_this.tableData.push({
-										id:new Date().getTime(),
-										name: _this.editForm.name,
-										mail: _this.editForm.mail,
-										phonenumber: _this.editForm.phonenumber,
-										addr: _this.editForm.addr,
-										state: _this.editForm.state
-									});
-								}else{
-									//编辑
-									for(var i=0;i<_this.tableData.length;i++){
-										if(_this.tableData[i].id==_this.editForm.id){
-											_this.tableData[i].name=_this.editForm.name;
-											_this.tableData[i].mail=_this.editForm.mail;
-											_this.tableData[i].phonenumber=_this.editForm.phonenumber;
-											_this.tableData[i].addr=_this.editForm.addr;
-											_this.tableData[i].state=_this.editForm.state;
-											break;
-										}
-									}
-								}
-							},1000);
-						
+							$.post("/api/account/detail/interviewee_list",
+							  {
+							    num:_this.editForm.id,
+							    username:_this.editForm.name,
+							    email:_this.editForm.mail,
+							    telephone:_this.editForm.phonenumber,
+							    address:_this.editForm.addr,
+							  },
+							  function(data,status){
+							    if (data['error_code'] == 0) {
+							      _this.$router.replace('/interviewee');
+							      _this.editLoading=false;
+							      NProgress.done();
+							      _this.btnEditText='提 交';
+							      _this.$notify({
+							        title: '成功',
+							        message: '提交成功',
+							        type: 'success'
+							      });
+							      _this.editFormVisible = false;
+							      $.get("/api/account/detail/interviewee_list",{},
+							              function(data,status){
+							                console.log(status)
+							                this.tableData = data['interviewee_list'];
+							              }); 
+							    }
+							    else {
+							      _this.$notify({
+							        title: '失败',
+							        message: '提交失败',
+							        type: 'fail'
+							      });
+							      return false;
+							    }              
+							  });			
 						});
-
 					}
 				});
 
@@ -252,15 +280,15 @@
 			handleAdd:function(){
 				var _this=this;
 
-				this.editFormVisible=true;
-				this.editFormTtile='新增';
-				
-				this.editForm.id=0;
-				this.editForm.name='';
-				this.editForm.mail='';
-				this.editForm.phonenumber='';
-				this.editForm.addr='';
-				this.editForm.state='';
+				_this.editFormVisible=true;
+				_this.editFormTtile='新增';
+				_this.editForm.room='';
+				_this.editForm.id=0;
+				_this.editForm.name='';
+				_this.editForm.mail='';
+				_this.editForm.phonenumber='';
+				_this.editForm.addr='';
+				_this.editForm.state='';
 			}
     }
   }

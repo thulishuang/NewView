@@ -104,6 +104,36 @@
 				this.editForm.personB=row.personB;
 				this.editForm.state=row.state;
 			},
+      handleDel:function(row){
+        var _this=this;
+
+        $.post("/api/account/detail/close_room",
+          {
+            roomnum:row.id,
+          },
+          function(data,status){
+            if (data['error_code'] == 0) {
+              _this.$notify({
+                title: '成功',
+                message: '删除成功',
+                type: 'success'
+              });
+              $.get("/api/account/detail/room_list",{},
+                      function(data,status){
+                        console.log(status)
+                        this.tableData = data['room_data'];
+                      }); 
+            }
+            else {
+              _this.$notify({
+                title: '失败',
+                message: '提交失败',
+                type: 'fail'
+              });
+              return false;
+            }              
+          });
+      },
 			//邀请候选人
 			handleInvite1:function(row){
         //TODO
