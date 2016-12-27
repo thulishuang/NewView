@@ -10,15 +10,21 @@ from Room.models import Room
 @api_view(['GET', 'POST'])
 def login(request):
     if request.method == "GET":
+        print (request.user)
+        print ("in login GET")
         if request.user:
             return Response(data={
-               'error_code': 0
+               'error_code': 1
             }, status=200)
-        return Response(data={
-            'error_code': 1
-        }, status=200)
+        else:
+            return Response(data={
+                'error_code': 0
+            }, status=200)
 
     elif request.method == "POST":
+        print (request.user)
+        print (request.user.username)
+        print ("in login POST")
         username = request.data['username']
         password = request.data['password']
         try:
@@ -26,16 +32,17 @@ def login(request):
             request.user = user
             return Response(data={
                 'error_code': 0
-            }, status=202)
+            }, status=200)
         except Manager.DoesNotExist:
             return Response(data={
                'error_code': 1
-            }, status=202)
+            }, status=200)
 
 
 @api_view(['POST'])
 def logout(request):
     try:
+        print (request.user.username)
         request.user = None
         return Response(data={
             'error_code': 0
@@ -43,7 +50,7 @@ def logout(request):
     except:
         return Response(data={
             'error_code': 1
-        }, status=410)
+        }, status=200)
 
 
 @api_view(['GET', 'POST'])
@@ -148,7 +155,7 @@ def interviewee_list(request):
                 'error_code': 1
             }, status=200)
 
-
+@api_view(['POST'])
 def delete_interviewee(request):
     num = request.data['data']
     interviewee = Interviewee.objects.get(pk=num)

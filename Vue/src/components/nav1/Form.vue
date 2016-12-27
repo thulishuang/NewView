@@ -1,7 +1,5 @@
 <template>
 	<section>
-
-
 		<!--列表-->
 		<template>
 			<el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%;">
@@ -12,8 +10,6 @@
 				<el-table-column prop="intro" label="房间简介" width="180" :formatter="formatSex">
 				</el-table-column>
 				<el-table-column prop="personA" label="面试官" width="180">
-				</el-table-column>
-				<el-table-column prop="personB" label="候选人" width="180">
 				</el-table-column>
 				<el-table-column prop="state" label="状态">
 				</el-table-column>
@@ -47,7 +43,14 @@
 </template>
 
 <script>
-
+  import $ from 'jquery'
+  import NProgress from 'nprogress'//页面顶部进度条
+  import 'nprogress/nprogress.css'
+  $.get("/api/account/detail/room_list",{},
+          function(data,status){
+            console.log(status)
+            this.tableData = data['room_data'];
+          }); 
   export default {
     data() {
       return {
@@ -68,7 +71,6 @@
 					name: '',
 					intro: '',
 					personA:'',
-					personB: '',
 					state: ''
 				},
 				editLoading:false,
@@ -78,63 +80,15 @@
 						{ required: true, message: '请输入姓名', trigger: 'blur' }
 					]
 				},
-				tableData: [{
-					id:1000,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1001,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1002,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1003,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1004,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1005,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1006,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}, {
-					id:1007,
-					name: '计蒜客面试',
-					intro: '招收前端工程师',
-					personA: '无',
-					personB:'无',
-					state:'使用中'
-				}],
+				tableData: [
+          {
+  					id:1,
+  					name: '计蒜客面试',
+  					intro: '招收前端工程师',
+  					personA: '无',	
+  					state:'使用中'
+  				}
+        ],
 				listLoading:false
      		}
     },
@@ -152,9 +106,11 @@
 			},
 			//邀请候选人
 			handleInvite1:function(row){
+        //TODO
 			},
 			//邀请面试官
 			handleInvite2:function(row){
+        //TODO
 			},			
 			//编辑 or 新增
 			editSubmit:function(){
@@ -166,51 +122,43 @@
 							_this.editLoading=true;
 							NProgress.start();
 							_this.btnEditText='提交中';
-							setTimeout(function(){
-								_this.editLoading=false;
-								NProgress.done();
-								_this.btnEditText='提 交';
-								_this.$notify({
-									title: '成功',
-									message: '提交成功',
-									type: 'success'
-								});
-								_this.editFormVisible = false;
-
-								if(_this.editForm.id==0){
-									//新增
-									_this.tableData.push({
-										id:new Date().getTime(),
-										name: _this.editForm.name,
-										intro: _this.editForm.intro,
-									});
-								}else{
-									//编辑
-									for(var i=0;i<_this.tableData.length;i++){
-										if(_this.tableData[i].id==_this.editForm.id){
-											_this.tableData[i].name=_this.editForm.name;
-											_this.tableData[i].intro=_this.editForm.intro;
-											break;
-										}
-									}
-								}
-							},1000);
-
+              $.post("/api/account/detail/room_list",
+                {
+                  roomnum:_this.editForm.id,
+                  title:_this.editForm.name,
+                  description:_this.editForm.intro,
+                },
+                function(data,status){
+                  if (data['error_code'] == 0) {
+                    _this.$router.replace('/roomlist');
+                    _this.editLoading=false;
+                    NProgress.done();
+                    _this.btnEditText='提 交';
+                    _this.$notify({
+                      title: '成功',
+                      message: '提交成功',
+                      type: 'success'
+                    });
+                    _this.editFormVisible = false;
+                    $.get("/api/account/detail/room_list",{},
+                            function(data,status){
+                              console.log(status)
+                              this.tableData = data['room_data'];
+                            }); 
+                  }
+                  else {
+                    _this.$notify({
+                      title: '失败',
+                      message: '提交失败',
+                      type: 'fail'
+                    });
+                    return false;
+                  }              
+                });
 						});
-
 					}
 				});
 
-			},
-			//显示新增界面
-			handleAdd:function(){
-				var _this=this;
-
-				this.editFormVisible=true;
-				this.editFormTtile='新增';
-				this.editForm.id=0;
-				this.editForm.name='';
-				this.editForm.intro='';
 			}
     }
   }

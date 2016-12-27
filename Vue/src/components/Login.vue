@@ -45,7 +45,7 @@
 			},
 			function(data,status){
 			  if (data['error_code'] == 0) {
-				_this.$router.replace('/table');
+				_this.$router.replace('/roomlist');
 			  }
 			  else {
 				_this.$confirm('用户名或密码错误', '提示', {
