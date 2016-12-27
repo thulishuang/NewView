@@ -7,15 +7,14 @@ import store from './vuex/store'
 import Vuex from 'vuex'
 import NProgress from 'nprogress'//页面顶部进度条
 import 'nprogress/nprogress.css'
+import $ from 'jquery'
 
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import Table from './components/nav1/Table.vue'
 import Form from './components/nav1/Form.vue'
-import Page3 from './components/nav1/Page3.vue'
-import Page4 from './components/nav2/Page4.vue'
-import Page5 from './components/nav2/Page5.vue'
-import Page6 from './components/nav3/Page6.vue'
+import Page1 from './components/nav2/Page1.vue'
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -27,7 +26,6 @@ const routes = [
     component: Login,
     hidden: true//不显示在导航中
   },
-  //{ path: '/main', component: Main },
 
   {
     path: '/',
@@ -36,8 +34,7 @@ const routes = [
     iconCls: 'el-icon-message',//图标样式class
     leaf:true,
     children: [
-      //{ path: '/main', component: Main },
-      { path: '/table', component: Form, name: '房间' },
+      { path: '/roomlist', component: Form, name: '房间' },
     ]
   },
   {
@@ -47,7 +44,7 @@ const routes = [
     iconCls: 'fa fa-id-card-o',
     leaf:true,
     children: [
-      { path: '/page4', component: Table, name: '候选人' },
+      { path: '/interviewee', component: Table, name: '候选人' },
     ]
   },
   {
@@ -57,7 +54,7 @@ const routes = [
     iconCls: 'fa fa-line-chart',
     leaf: true,//只有一个节点
     children: [
-      { path: '/page6', component: Page6, name: '服务' }
+      { path: '/page1', component: Page1, name: '服务' }
     ]
   }
 ]
@@ -87,7 +84,8 @@ new Vue({
 $.get("/api/account/login",{},
     function(data,status){
       if (data['error_code'] == 0) {
-        _this.$router.replace('/table');
+        router.replace('/roomlist');
+        console.log(data['error_code']);
       }
       else {
         router.replace('/login')
