@@ -1,15 +1,13 @@
 <template>
 	<el-row class="panel">
 		<el-col :span="24" class="panel-top">
-		<el-col :span="1" style="font-size:26px;">
-			<i>&nbsp</i>
-		</el-col>
-			<el-col :span="19" style="font-size:26px;">
+			<el-col :span="20" style="font-size:26px;">
+				<img src="../assets/logo4.png" class="logo"> 
 				<span>New<i style="color:#20a0ff">View</i></span>
 			</el-col>
 			<el-col :span="4">
 				<el-tooltip class="item tip-logout" effect="dark" content="退出" placement="bottom" style="padding:0px;">
-					<i class="logout" v-on:click="logout"></i>
+					<!-- <i class="logout" v-on:click="logout"></i> -->
 					<i class="fa fa-sign-out" aria-hidden="true" v-on:click="logout"></i>
 				</el-tooltip>
 			</el-col>
@@ -44,6 +42,46 @@
 
 <script>
 	import $ from 'jquery'
+	function csrfSafeMethod(method) {  
+	  // these HTTP methods do not require CSRF protection  
+	  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+	}  
+	function sameOrigin(url) {  
+	  // test that a given url is a same-origin URL  
+	  // url could be relative or scheme relative or absolute  
+	  var host = document.location.host; // host + port  
+	  var protocol = document.location.protocol;  
+	  var sr_origin = '//' + host;  
+	  var origin = protocol + sr_origin;  
+	  // Allow absolute or scheme relative URLs to same origin  
+	  return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||  
+	    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||  
+	    // or any other URL that isn't scheme relative or absolute i.e relative.  
+	    !(/^(\/\/|http:|https:).*/.test(url));  
+	}  
+	function getCookie(name) {  
+	  var cookieValue = null;  
+	  if (document.cookie && document.cookie != '') {  
+	    var cookies = document.cookie.split(';');  
+	    for (var i = 0; i < cookies.length; i++) {  
+	      var cookie = $.trim(cookies[i]);  
+	      // Does this cookie string begin with the name we want?  
+	      if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+	        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+	        break;  
+	      }  
+	    }  
+	  }  
+	  return cookieValue;  
+	}   
+	var csrftoken = getCookie('csrftoken');  
+	$.ajaxSetup({  
+	    beforeSend: function(xhr, settings) {  
+	        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {  
+	            xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+	        }  
+	    }  
+	});
 	export default {
 		data() {
 			return {
@@ -69,7 +107,7 @@
 	},
 		methods: {
 			onSubmit() {
-				console.log('submit!');
+				// console.log('submit!');
 			},
 			handleopen(){
 				//console.log('handleopen');
@@ -77,8 +115,8 @@
 			handleclose(){
 				//console.log('handleclose');
 			},
-						handleselect:function(a,b){
-						},
+			handleselect:function(a,b){
+			},
 			//退出登录
 			logout:function(){
 				var _this=this;

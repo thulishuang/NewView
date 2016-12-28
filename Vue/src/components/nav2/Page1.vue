@@ -1,4 +1,4 @@
 <template>
-	<section>page1...
+	<section>敬请期待！！
 	</section>
 </template>

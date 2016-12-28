@@ -28,7 +28,6 @@ def user_login(request):
     elif request.method == "POST":
         username = request.data['username']
         password = request.data['password']
-        print (username+password)
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
@@ -43,7 +42,6 @@ def user_login(request):
 
 @api_view(['POST'])
 def user_logout(request):
-    print (request.user)
     if request.user.is_authenticated:
         logout(request)
         return Response(data={
@@ -53,7 +51,6 @@ def user_logout(request):
         return Response(data={
             'error_code': 1
         }, status=200)
-
 
 @api_view(['GET', 'POST'])
 def room_list(request):
@@ -71,11 +68,10 @@ def room_list(request):
                     'num': r.id,
                     'title': r.title,
                     'description': r.description,
-                    'state': r.state,
-                    'interviewer_name': r.interviewer.username
+                    'interviewer_name': r.interviewer.username,
+                    'state': r.state
                 } for r in room_list
             ]
-            # print(user_data, room_data)
             return Response(data={
                 'user': user_data,
                 'roomlist': room_data,
@@ -199,7 +195,7 @@ def add_interviewee(request):
             addr=post_data['address']
         )
         interviewee.save()
-        index_table = IndexTable.objects.get(user.id)
+        index_table = IndexTable.objects.get(user_id=user.id)
         index_table.interviewee_list.add(interviewee)
         index_table.save()
 

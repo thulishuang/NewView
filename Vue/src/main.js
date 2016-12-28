@@ -86,7 +86,6 @@ $.get("/api/account/login",{},
     function(data,status){
       if (data['error_code'] == 0) {
         router.replace('/roomlist');
-        console.log(data['error_code']);
       }
       else {
         router.replace('/login')
