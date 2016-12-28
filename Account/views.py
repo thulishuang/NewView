@@ -23,7 +23,9 @@ def user_login(request):
     elif request.method == "POST":
         username = request.data['username']
         password = request.data['password']
+        print (username+password)
         user = authenticate(username=username, password=password)
+        print (user)
         if user is not None:
             login(request, user)
             return Response(data={
@@ -37,6 +39,7 @@ def user_login(request):
 
 @api_view(['POST'])
 def user_logout(request):
+    print (request.user)
     if request.user.is_authenticated:
         logout(request)
         return Response(data={
