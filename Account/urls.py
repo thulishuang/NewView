@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^detail/interviewee_list$', interviewee_list, name="intervieweelist"),
     url(r'detail/interviewee_list/delete$', delete_interviewee, name="delete_interviewee"),
     url(r'detail/interviewee_list/add$', add_interviewee, name="add_interviewee"),
+    url(r'detail/interviewee_list/sendmail$', send_mail, name="send_mail"),
 ]
