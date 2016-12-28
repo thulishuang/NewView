@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Account',
     'Room',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -56,9 +57,7 @@ ROOT_URLCONF = 'NewView.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,4 +120,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = '/static/'
+
+# EMAIL PART
+
+EMAIL_HOST = 'smtp.163.com'
+
+EMAIL_HOST_USER = 'luoht14@163.com'
+
+EMAIL_HOST_PASSWORD = 'yichuanmima'
+
+EMAIL_SUBJECT_PREFIX = u'[test]'
+
+EMAIL_USE_TLS = True
+
+# REST FRAMEWORK PART
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}

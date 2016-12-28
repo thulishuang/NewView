@@ -1,13 +1,14 @@
 from django.db import models
-from Account.models import Manager, Interviewee, Interviewer
+from django.contrib.auth.models import User
+from Account.models import Interviewee, Interviewer
 
 
 class Room(models.Model):
-    url = models.CharField(max_length=200, default="")
-    title = models.CharField(max_length=200, default="")
-    description = models.CharField(max_length=1000, default="")
+    port = models.IntegerField(default=8000, unique=True)
+    title = models.CharField(max_length=200, default="Default room title")
+    description = models.CharField(max_length=1000, default="Default description for a default room")
     state = models.BooleanField(default=False)
-    manager = models.ForeignKey(Manager)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE)
     interviewer = models.OneToOneField(Interviewer, default=Interviewer())
     interviewees = models.ManyToManyField(Interviewee)
 
