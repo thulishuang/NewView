@@ -1,53 +1,48 @@
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Manager, Interviewee
-from Room.models import Room
+from .models import *
+from Room.models import *
 
 # Use request.session['status'] to record user status
 # Use request.session['username'] to record user name
 
 
 @api_view(['GET', 'POST'])
-def login(request):
+def user_login(request):
     if request.method == "GET":
-        print (request.user)
-        print ("in login GET")
-        if request.user:
+        if request.user.is_authenticated:
             return Response(data={
-               'error_code': 1
+               'error_code': 0
             }, status=200)
         else:
             return Response(data={
-                'error_code': 0
+                'error_code': 1
             }, status=200)
 
     elif request.method == "POST":
-        print (request.user)
-        print (request.user.username)
-        print ("in login POST")
         username = request.data['username']
         password = request.data['password']
-        try:
-            user = Manager.objects.get(username=username, password=password)
-            request.user = user
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
             return Response(data={
-                'error_code': 0
+                'error_code': 0,
             }, status=200)
-        except Manager.DoesNotExist:
+        else:
             return Response(data={
-               'error_code': 1
+                'error_code': 1
             }, status=200)
 
 
 @api_view(['POST'])
-def logout(request):
-    try:
-        print (request.user.username)
-        request.user = None
+def user_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
         return Response(data={
             'error_code': 0
         }, status=200)
-    except:
+    else:
         return Response(data={
             'error_code': 1
         }, status=200)
@@ -56,33 +51,42 @@ def logout(request):
 @api_view(['GET', 'POST'])
 def room_list(request):
     if request.method == "GET":
-        user = request.user
-        user_data = {
-            'username': user.username,
-            'room_num': user.own_room_num,
-        }
-        room_list = Room.objects.filter(manager=user)
-        room_data = [
-            {
-                'num': r.id,
-                'title': r.title,
-                'description': r.description,
-                'state': r.state,
-                'interviewer_name': r.interviewer.username
-            } for r in room_list
-        ]
-        return Response(data={
-            'user': user_data,
-            'roomlist': room_data
-        }, status=200)
+        if request.user.is_authenticated:
+            user = request.user
+            index_table = IndexTable.objects.get(user_id=user.id)
+            user_data = {
+                'username': request.user.username,
+                'room_num': index_table.own_room_num,
+            }
+            room_list = Room.objects.filter(manager=request.user)
+            room_data = [
+                {
+                    'num': r.id,
+                    'title': r.title,
+                    'description': r.description,
+                    'state': r.state,
+                    'interviewer_name': r.interviewer.username
+                } for r in room_list
+            ]
+            # print(user_data, room_data)
+            return Response(data={
+                'user': user_data,
+                'roomlist': room_data,
+                'error_code': 0
+            }, status=200)
+        else:
+            return Response(data={
+                'error_code': 1,
+                'error_data': 'no user log in'
+            }, status=200)
 
     elif request.method == "POST":
         post_data = {
-            'roomnum': int(request.data['roomnum']),
+            'room_id': int(request.data['roomnum']),
             'title': request.data['title'],
             'description': request.data['description']
         }
-        room = Room.objects.get(pk=post_data['roomnum'])
+        room = Room.objects.get(pk=post_data['room_id'])
         try:
             room.title = post_data['title']
             room.description = post_data['description']
@@ -98,8 +102,8 @@ def room_list(request):
 
 @api_view(['POST'])
 def close_room(request):
-    roomnum = int(request.data['roomnum'])
-    room = Room.objects.get(pk=roomnum)
+    room_id = int(request.data['roomnum'])
+    room = Room.objects.get(id=room_id)
     try:
         room.state = False
         room.save()
@@ -116,25 +120,24 @@ def close_room(request):
 def interviewee_list(request):
     if request.method == 'GET':
         user = request.user
-        room_list = Room.objects.filter(manager=user)
-        interviewee_list = []
-        for r in room_list:
-            for i in r.interviewees.all():
-                interviewee_list.append({
-                    'num': i.id,
-                    'username': i.username,
-                    'email': i.email,
-                    'telephone': i.telephone,
-                    'address': i.addr,
-                    'state': i.state
-                })
+        index_table = IndexTable.objects.get(user_id=user.id)
+        data_list = []
+        for i in index_table.interviewee_list.all():
+            data_list.append({
+                'num': i.id,
+                'username': i.username,
+                'email': i.email,
+                'telephone': i.telephone,
+                'address': i.addr,
+                'state': i.state
+            })
         return Response(data={
-            'interviewee_list': interviewee_list
+            'interviewee_list': data_list
         }, status=200)
 
     elif request.method == 'POST':
         post_data = {
-            'num': int(request.data['num']),
+            'num': request.data['num'],
             'username': request.data['username'],
             'email': request.data['email'],
             'telephone': request.data['telephone'],
@@ -155,6 +158,7 @@ def interviewee_list(request):
                 'error_code': 1
             }, status=200)
 
+
 @api_view(['POST'])
 def delete_interviewee(request):
     num = request.data['data']
@@ -170,6 +174,32 @@ def delete_interviewee(request):
         }, status=200)
 
 
+@api_view((['POST']))
 def add_interviewee(request):
+    user = request.user
+    post_data = {
+        'manager': request.data['manager'],
+        'username': request.data['username'],
+        'email': request.data['email'],
+        'telephone': request.data['telephone'],
+        'address': request.data['address']
+    }
+    try:
+        interviewee = Interviewee(
+            username=post_data['username'],
+            email=post_data['email'],
+            telephone=post_data['telephone'],
+            addr=post_data['address']
+        )
+        interviewee.save()
+        index_table = IndexTable.objects.get(user.id)
+        index_table.interviewee_list.add(interviewee)
+        index_table.save()
 
-    return
+        return Response(data={
+            'error_code': 0
+        }, status=200)
+    except:
+        return Response(data={
+            'error_code': 1
+        }, status=200)

@@ -1,17 +1,19 @@
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import User
 from django.utils.deconstruct import deconstructible
 
 
-@deconstructible
-class Manager(models.Model):
-    username = models.CharField(max_length=50, default="")
-    password = models.CharField(max_length=50, default="")
-    own_room_num = models.IntegerField(default=0)
-    outdate_time = models.DateTimeField(default=timezone.datetime.now())
+class IndexTable(models.Model):
+    user_id = models.IntegerField(default=0, unique=True)
+    own_room_num = models.IntegerField(default=5)
+    interviewee_list = models.ManyToManyField("Account.Interviewee")
 
     def __str__(self):
-        return self.username
+        if self.user_id != 0:
+            user = User.objects.get(id=self.user_id)
+            return user.username + " owning " + str(self.own_room_num) + " rooms "
+        else:
+            return str(self.user_id) + " owning " + str(self.own_room_num) + " rooms"
 
 
 @deconstructible
