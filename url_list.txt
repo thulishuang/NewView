@@ -31,4 +31,7 @@ url(后端api接口):
 	/api/accout/detail/interviewee_list/add :
 		post : 添加候选人，请求参数：{username, email, telephone, address}
 		删除成功返回code=0, num，否则返回code!=0
+	/api/account/detail/interviewee_list/sendemail :
+	    post : 给候选人发送面试房间链接的邮件，请求参数：{userid, roomid}
+	    发送成功返回code=0，否则返回code=1
 

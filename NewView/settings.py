@@ -132,9 +132,9 @@ EMAIL_HOST_USER = 'luoht14@163.com'
 
 EMAIL_HOST_PASSWORD = 'yichuanmima'
 
-EMAIL_SUBJECT_PREFIX = u'[test]'
-
-EMAIL_USE_TLS = True
+# EMAIL_SUBJECT_PREFIX = u'[test]'
+#
+# EMAIL_USE_TLS = True
 
 # REST FRAMEWORK PART
 

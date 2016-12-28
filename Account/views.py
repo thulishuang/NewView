@@ -1,8 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from smtplib import SMTP, SMTPException
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 from .models import *
 from Room.models import *
+from NewView.settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 
 # Use request.session['status'] to record user status
 # Use request.session['username'] to record user name
@@ -25,7 +30,6 @@ def user_login(request):
         password = request.data['password']
         print (username+password)
         user = authenticate(username=username, password=password)
-        print (user)
         if user is not None:
             login(request, user)
             return Response(data={
@@ -181,7 +185,7 @@ def delete_interviewee(request):
 def add_interviewee(request):
     user = request.user
     post_data = {
-        'manager': request.data['manager'],
+        # 'manager': request.data['manager'],
         'username': request.data['username'],
         'email': request.data['email'],
         'telephone': request.data['telephone'],
@@ -198,6 +202,35 @@ def add_interviewee(request):
         index_table = IndexTable.objects.get(user.id)
         index_table.interviewee_list.add(interviewee)
         index_table.save()
+
+        return Response(data={
+            'error_code': 0
+        }, status=200)
+    except:
+        return Response(data={
+            'error_code': 1
+        }, status=200)
+
+
+@api_view((['POST']))
+def send_mail(request):
+    try:
+        user = Interviewee.objects.get(id=request.data['userid'])
+        room = Room.objects.get(id=request.data['roomid'])
+        receiver = user.email
+
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_HOST_USER
+        msg['To'] = receiver
+        msg['Subject'] = room.title
+        body = room.description
+        msg.attach(MIMEText(body, 'plain'))
+
+        server = SMTP(EMAIL_HOST)
+        server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        server.starttls()
+        server.sendmail(EMAIL_HOST_USER, receiver, msg.as_string())
+        server.quit()
 
         return Response(data={
             'error_code': 0
