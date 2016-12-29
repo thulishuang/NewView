@@ -13,4 +13,4 @@ class Room(models.Model):
     interviewees = models.ManyToManyField(Interviewee)
 
     def __str__(self):
-        return self.title
+        return self.manager.username + "\'s room: " + self.title
