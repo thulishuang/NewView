@@ -15,23 +15,23 @@ url(后端api接口):
 		get : 请求参数为空，返回数据格式
 			{
 				user(username, room_num),
-				roomlist{(num, title, description, state, interviewer_email},
+				roomlist{(num, title, description, state, interviewer_name, interviewer_email},
 			}
-		post : 修改房间信息，请求参数： {roomnum, title, description,interviewer_email}, 编辑成功返回code=0，否则返回code!=0
+		post : 修改房间信息，请求参数： {roomnum, title, description, interviewer_name, interviewer_email}, 编辑成功返回code=0，否则返回code!=0
 4.	/api/account/detail/room_list/invite_interviewer : 邀请面试官
 		post : 请求参数： {roomid}, 邮件发送成功返回code=0，否则返回code!=0
 5.	/api/account/detail/room_list/change : 更改房间状态
 		post : 请求参数： {roomnum}, 更改成功返回code=0，否则返回code!=0
 6.	/api/accout/detail/interviewee_list : 候选人列表
 		get : 请求参数为空，返回数据格式
-			interviewee_list{(num, username, email, telephone, address, state)}
-		post : 如果候选人存在，则修改候选人信息，请求参数: {num, username, email, telephone, address}
+			interviewee_list{(num, username, email, telephone, address, state, roomnum)}
+		post : 如果候选人存在，则修改候选人信息，请求参数: {num, username, email, telephone, address, roomnum}
 		编辑成功返回code=0，否则返回code!=0；
 		       否则添加候选人，参数相同，num字段可随意设置。
 7.	/api/accout/detail/interviewee_list/delete :
 		post : 删除候选人，请求参数：{num}
 		删除成功返回code=0，否则返回code!=0
-8.	/api/account/detail/interviewee_list/sendemail :
+8.	/api/account/detail/interviewee_list/send_mail :
 	    post : 给候选人发送面试房间链接的邮件，请求参数：{userid, roomid}
 	    发送成功返回code=0，否则返回code=1
 
@@ -53,5 +53,15 @@ url(后端api接口):
     5. 编辑房间信息时，post的数据增加interviewer_email字段（见接口3）
     6. room_list接口返回的房间信息中添加了interviewer_email字段（见接口3）
     7. 面试报告：放弃
+
+
+#反馈# (邀请有点问题，其他均ok)
+1/api/account/detail/room_list 
+post:增加参数interviewer_name
+get : 增加interviewer_name
+2/api/accout/detail/interviewee_list post 方法如果新增候选人，id可随意设置是指前端随便给？
+3/api/accout/detail/interviewee_list 
+post:增加参数roomnum
+get : 增加roomnum 房间id
 
 

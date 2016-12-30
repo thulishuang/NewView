@@ -141,7 +141,7 @@
 					phonenumber:'',
 					addr: '',
 					state: '',
-					room: ''
+					roomnum: ''
 				},
 				editLoading:false,
 				btnEditText:'提 交',
@@ -199,13 +199,14 @@
       loadAll() {
       	var _this = this;
       	var rooms = [];
-      	var tmproom = {value:"ss"};
+      	var tmproom = {value:"ss",id: 1};
       	var tmp;
       	$.get("/api/account/detail/room_list",{},
       	  function(data,status){
       	    tmp = data['roomlist'];
       	    for(var i = 0; i < tmp.length; i++){
-      	      tmproom.value = "房间" + tmp[i].num + ": " + tmp[i].title
+      	      tmproom.value = "房间" + tmp[i].num + ": " + tmp[i].title;
+      	      tmproom.id = tmp[i].num;
       	      rooms[i] = tmproom;
       	    }
       	});
@@ -213,6 +214,7 @@
       },
       handleSelect(item) {
         console.log(item);
+        this.editForm.roomnum = item.id;
       },
 			//删除记录
 			handleDel:function(row){
@@ -257,10 +259,10 @@
 				  _this.editLoading=true;
 				  NProgress.start();
 				  _this.btnEditText='邀请中';
-				  $.post("/api/account/detail/interviewee_list/sendemail",
+				  $.post("/api/account/detail/interviewee_list/send_mail",
 				    {
 				      userid:row.num,
-				      roomid:row.room
+				      roomid:row.roomnum
 				    },
 				    function(data,status){
 				      if (data['error_code'] == 0) {
@@ -296,30 +298,33 @@
 			handleEdit:function(row){
 				this.editFormVisible = true;
 				this.editFormTtile = '编辑';
-				this.editForm.id = row.id;
+				this.editForm.id = row.num;
 				this.editForm.name = row.username;
 				this.editForm.mail = row.email;
 				this.editForm.phonenumber = row.telephone;
 				this.editForm.addr = row.address;
 				this.editForm.state = row.state;
-				this.editForm.room = row.room;
+				this.editForm.roomnum = row.roomnum;
 			},
 			//编辑 or 新增
 			editSubmit:function(){
 				var _this=this;
-
+				console.log(this.editForm);
 				_this.$refs.editForm.validate((valid)=>{
 					if(valid){
 						_this.$confirm('确认提交吗？','提示',{}).then(()=>{
 							_this.editLoading=true;
 							NProgress.start();
 							_this.btnEditText='提交中';
-              $.post("/api/account/detail/interviewee_list/add",
+              $.post("/api/account/detail/interviewee_list",
                 {
+                	num:_this.editForm.id,
                   username:_this.editForm.name,
                   email:_this.editForm.mail,
                   telephone:_this.editForm.phonenumber,
                   address:_this.editForm.addr,
+                  state:_this.editForm.state,
+                  roomnum:_this.editForm.roomnum,
                 },
                 function(data,status){
                   if (data['error_code'] == 0) {
@@ -361,7 +366,7 @@
 				this.editForm.phonenumber='';
 				this.editForm.addr='';
 				this.editForm.state='';
-				this.editForm.room='';
+				this.editForm.roomnum='';
 			}
     },
     mounted() {

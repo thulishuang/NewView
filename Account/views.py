@@ -231,6 +231,7 @@ def send_mail(request):
         user = Interviewee.objects.get(id=request.data['userid'])
         room = Room.objects.get(id=request.data['roomid'])
         receiver = user.email
+        print (receiver)
 
         msg = MIMEMultipart()
         msg['From'] = EMAIL_HOST_USER

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from Account.models import Interviewee, Interviewer
+from Account.models import Interviewee
 
 
 class Room(models.Model):

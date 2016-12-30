@@ -177,7 +177,7 @@
           _this.btnEditText='邀请中';
           $.post("/api/account/detail/room_list/invite_interviewer",
             {
-              email:row.interviewer_email,
+              roomid:row.num,
             },
             function(data,status){
               if (data['error_code'] == 0) {
@@ -211,7 +211,7 @@
           _this.editLoading=true;
           NProgress.start();
           _this.btnEditText='开启中';
-          $.post("/api/account/detail/room_list/open",
+          $.post("/api/account/detail/room_list/change",
             {
               roomnum:row.num,
             },
@@ -247,7 +247,7 @@
           _this.editLoading=true;
           NProgress.start();
           _this.btnEditText='关闭中';
-          $.post("/api/account/detail/room_list/close",
+          $.post("/api/account/detail/room_list/change",
             {
               roomnum:row.num,
             },
@@ -291,6 +291,8 @@
                   roomnum:_this.editForm.num,
                   title:_this.editForm.title,
                   description:_this.editForm.description,
+                  interviewer_name:_this.editForm.interviewer_name,
+                  interviewer_email:_this.editForm.interviewer_email
                 },
                 function(data,status){
                   if (data['error_code'] == 0) {
