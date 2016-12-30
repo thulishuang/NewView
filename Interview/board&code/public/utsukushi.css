@@ -1,0 +1,93 @@
+html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #cccccc;
+    }
+
+
+    #header{
+    	background: rgba(0, 0, 0, 0.7);
+  		padding: 1%;
+  		overflow: hidden;
+  		height: 30px;
+    }
+
+    #editor{
+      font-size: 26px;
+      color:white;
+    	position:absolute;
+    	left:50px;
+    	top: 100px;
+    	width: 45%;
+      	height: 75%;
+      	margin: 0;
+      	padding: 0;
+    	border-radius: 17px;
+		box-shadow: 0px 0px 9px #000000;
+		background-image: -moz-linear-gradient(top, #404040, #666770);
+		background-image: linear-gradient(top, #404040, #666770);
+		background-clip: padding-box;
+    }
+
+
+
+    #videos{
+    	position:absolute;
+    	left:780px;
+    	top: 100px;
+    	width: 45%;
+      	height: 65%;
+      	margin: 0;
+      	padding: 0;
+    	border-radius: 17px;
+		box-shadow: 0px 0px 6px #000000;
+		background-image: -moz-linear-gradient(top, #404040, #666770);
+		background-image: linear-gradient(top, #404040, #666770);
+		background-clip: padding-box;
+		z-index: 1;
+    }
+
+    #chat{
+      position:absolute;
+      left:50px;
+      top: 100px;
+      width: 45%;
+        height: 75%;
+        margin: 0;
+        padding: 0;
+      border-radius: 17px;
+    box-shadow: 0px 0px 9px #000000;
+    background-image: -moz-linear-gradient(top, #404040, #666770);
+    background-image: linear-gradient(top, #404040, #666770);
+    background-clip: padding-box;
+    }
+
+    #me{
+
+      position: absolute;
+      width:30%;
+      z-index: 2;
+      border-radius: 17px;
+    box-shadow: 0px 0px 9px #000000;
+    }
+
+    .other{
+      position: absolute;
+      width:100%;
+      z-index: 1;
+      border-radius: 17px;
+    box-shadow: 0px 0px 9px #000000;
+    }
+
+    #switch{
+      position:absolute;
+      left:1485px;
+      top: 390px;
+      width: 40px;
+        height: 40px;
+      opacity: 1;
+      z-index: 5;
+      box-shadow: 0px 0px 6px #000000;
+    }

@@ -136,6 +136,7 @@
 				//编辑界面数据
 				editForm: {
 					id:0,
+					room:'',
 					name: '',
 					mail: '',
 					phonenumber:'',
@@ -290,6 +291,7 @@
 				  
 				});
 			},
+
 			//查看面试报告
 			handleView:function(row){
 				//TODO

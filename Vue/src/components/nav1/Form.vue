@@ -168,6 +168,7 @@
         this.editForm.interviewer_email=row.interviewer_email;
 				this.editForm.state=row.state;
 			},
+
 			//邀请面试官
 			handleInviteInterviewer:function(row){
         var _this = this;
