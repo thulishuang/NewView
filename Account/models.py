@@ -17,14 +17,6 @@ class IndexTable(models.Model):
 
 
 @deconstructible
-class Interviewer(models.Model):
-    username = models.CharField(max_length=50, default="")
-
-    def __str__(self):
-        return self.username
-
-
-@deconstructible
 class Interviewee(models.Model):
     username = models.CharField(max_length=50, default="")
     email = models.CharField(max_length=50, default="")

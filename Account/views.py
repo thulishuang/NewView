@@ -7,7 +7,8 @@ from email.mime.text import MIMEText
 
 from .models import *
 from Room.models import *
-from NewView.settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
+from NewView.settings import EMAIL_HOST, EMAIL_HOST_USER, \
+    EMAIL_HOST_PASSWORD, SERVER_ADDR
 
 # Use request.session['status'] to record user status
 # Use request.session['username'] to record user name
@@ -68,7 +69,7 @@ def room_list(request):
                     'num': r.id,
                     'title': r.title,
                     'description': r.description,
-                    'interviewer_name': r.interviewer.username,
+                    'interviewer_email': r.interviewer_email,
                     'state': r.state
                 } for r in room_list
             ]
@@ -87,12 +88,14 @@ def room_list(request):
         post_data = {
             'room_id': int(request.data['roomnum']),
             'title': request.data['title'],
-            'description': request.data['description']
+            'description': request.data['description'],
+            'interviewer_email': request.data['interviewer_email']
         }
         room = Room.objects.get(pk=post_data['room_id'])
         try:
             room.title = post_data['title']
             room.description = post_data['description']
+            room.interviewer_email = post_data['interviewer_email']
             room.save()
             return Response(data={
                 'error_code': 0
@@ -104,11 +107,11 @@ def room_list(request):
 
 
 @api_view(['POST'])
-def close_room(request):
+def change_room(request):
     room_id = int(request.data['roomnum'])
     room = Room.objects.get(id=room_id)
     try:
-        room.state = False
+        room.state = not room.state
         room.save()
         return Response(data={
             'error_code': 0
@@ -146,8 +149,8 @@ def interviewee_list(request):
             'telephone': request.data['telephone'],
             'address': request.data['address']
         }
-        interviewee = Interviewee.objects.get(pk=post_data['num'])
         try:
+            interviewee = Interviewee.objects.get(pk=post_data['num'])
             interviewee.username = post_data['username']
             interviewee.email = post_data['email']
             interviewee.telephone = post_data['telephone']
@@ -156,10 +159,55 @@ def interviewee_list(request):
             return Response(data={
                 'error_code': 0
             }, status=200)
+
+        except Interviewee.DoesNotExist:
+            user = request.user
+            index_table = IndexTable.objects.get(user_id=user.id)
+            interviewee = Interviewee(
+                username=post_data['username'],
+                email=post_data['email'],
+                telephone=post_data['telephone'],
+                addr=post_data['address']
+            )
+            interviewee.save();
+            index_table.interviewee_list.add(interviewee)
+            index_table.save()
+            return Response(data={
+                'error_code': 0
+            }, status=200)
+
         except:
             return Response(data={
                 'error_code': 1
             }, status=200)
+
+
+@api_view((["POST"]))
+def invite_interviewer(request):
+    room = Room.objects.get(id=request.data['roomid'])
+    receiver = room.interviewer_email
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_HOST_USER
+        msg['To'] = receiver
+        msg['Subject'] = room.title + "的面试通知"
+        body = room.description + "\n请点击链接\n\t http://" + \
+               SERVER_ADDR + ":3000\#" + room.title + "\n\t 参与面试！"
+        msg.attach(MIMEText(body, 'plain'))
+
+        server = SMTP(EMAIL_HOST)
+        server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        server.starttls()
+        server.sendmail(EMAIL_HOST_USER, receiver, msg.as_string())
+        server.quit()
+
+        return Response(data={
+            'error_code': 0,
+        }, status=200)
+    except:
+        return Response(data={
+            'error_code': 1,
+        }, status=200)
 
 
 @api_view(['POST'])
@@ -168,37 +216,6 @@ def delete_interviewee(request):
     interviewee = Interviewee.objects.get(pk=num)
     try:
         interviewee.delete()
-        return Response(data={
-            'error_code': 0
-        }, status=200)
-    except:
-        return Response(data={
-            'error_code': 1
-        }, status=200)
-
-
-@api_view((['POST']))
-def add_interviewee(request):
-    user = request.user
-    post_data = {
-        # 'manager': request.data['manager'],
-        'username': request.data['username'],
-        'email': request.data['email'],
-        'telephone': request.data['telephone'],
-        'address': request.data['address']
-    }
-    try:
-        interviewee = Interviewee(
-            username=post_data['username'],
-            email=post_data['email'],
-            telephone=post_data['telephone'],
-            addr=post_data['address']
-        )
-        interviewee.save()
-        index_table = IndexTable.objects.get(user_id=user.id)
-        index_table.interviewee_list.add(interviewee)
-        index_table.save()
-
         return Response(data={
             'error_code': 0
         }, status=200)
@@ -218,8 +235,9 @@ def send_mail(request):
         msg = MIMEMultipart()
         msg['From'] = EMAIL_HOST_USER
         msg['To'] = receiver
-        msg['Subject'] = room.title
-        body = room.description
+        msg['Subject'] = room.title + "的面试通知"
+        body = room.description + "\n请点击链接\n\t http://" + \
+               SERVER_ADDR + ":3000\#" + room.title + "\n\t 参与面试！"
         msg.attach(MIMEText(body, 'plain'))
 
         server = SMTP(EMAIL_HOST)
