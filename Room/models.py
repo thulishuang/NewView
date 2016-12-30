@@ -9,7 +9,7 @@ class Room(models.Model):
     description = models.CharField(max_length=1000, default="Default description for a default room")
     state = models.BooleanField(default=False)
     manager = models.ForeignKey(User, on_delete=models.CASCADE)
-    interviewer = models.OneToOneField(Interviewer, default=Interviewer())
+    interviewer_email = models.CharField(max_length=100, default="")
     interviewees = models.ManyToManyField(Interviewee)
 
     def __str__(self):

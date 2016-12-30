@@ -144,3 +144,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+# server information
+
+SERVER_ADDR = "138.68.25.237"
