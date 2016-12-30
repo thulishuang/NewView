@@ -1,9 +1,9 @@
-# vueAdmin
-a simple admin template based on [vuejs2](http://vuejs.org/) and [element](http://element.eleme.io/#/).
+# NewView
+a simple site based on [vuejs2](http://vuejs.org/) and [element](http://element.eleme.io/#/).
 
 ### Usage
 
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli).
+This is a project for [vue-cli](https://github.com/vuejs/vue-cli).
 
 ``` bash
 # install dependencies
