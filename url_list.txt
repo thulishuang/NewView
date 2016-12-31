@@ -64,3 +64,7 @@ get : 增加interviewer_name
 post:增加参数roomnum
 get : 增加roomnum 房间id
 
+#反馈结果#
+1. 已处理
+2. 新增候选人，id可使用0这种默认值，既然候选人并不在数据库中。
+3. 已处理
