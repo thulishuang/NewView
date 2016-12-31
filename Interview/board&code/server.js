@@ -23,6 +23,8 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket) {
 	console.log("new user connected");
+	client_id += 1;
+    io.emit("assign_id", client_id);
 
 	socket.on('drawClick', function(data) {
 	    socket.broadcast.emit('draw', {
