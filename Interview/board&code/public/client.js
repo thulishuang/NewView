@@ -23,8 +23,10 @@ socket.on('clear', function(data) {
     });
 
 socket.on('assign_id', function(data){
-    if (client_id === 0)
+    if (client_id === 0) {
         client_id = data;
+        console.log("my id " + client_id);
+    }
 });
 
 socket.on('server_editor', function(data) {

@@ -85,7 +85,7 @@ setInterval(function(){
 		});
 		prev_operation = null;
 	}
-}, 500);
+}, 1000);
 
 http.listen(4000, function(){
 	console.log('listening on *:4000');
