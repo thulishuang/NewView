@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^detail/room_list/change$', change_room, name="changeroom"),
     url(r'^detail/interviewee_list$', interviewee_list, name="intervieweelist"),
     url(r'detail/interviewee_list/delete$', delete_interviewee, name="delete_interviewee"),
-    url(r'detail/interviewee_list/sendmail$', send_mail, name="send_mail"),
+    url(r'detail/interviewee_list/send_mail$', send_mail, name="send_mail"),
 ]

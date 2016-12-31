@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from Account.models import Interviewee, Interviewer
+from Account.models import Interviewee
 
 
 class Room(models.Model):
@@ -9,6 +9,7 @@ class Room(models.Model):
     description = models.CharField(max_length=1000, default="Default description for a default room")
     state = models.BooleanField(default=False)
     manager = models.ForeignKey(User, on_delete=models.CASCADE)
+    interviewer_name = models.CharField(max_length=50, default="")
     interviewer_email = models.CharField(max_length=100, default="")
     interviewees = models.ManyToManyField(Interviewee)
 

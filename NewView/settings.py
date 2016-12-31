@@ -128,13 +128,9 @@ STATIC_URL = '/static/'
 
 EMAIL_HOST = 'smtp.163.com'
 
-EMAIL_HOST_USER = 'luoht14@163.com'
+EMAIL_HOST_USER = 'yangjiantshh@163.com'
 
-EMAIL_HOST_PASSWORD = 'yichuanmima'
-
-# EMAIL_SUBJECT_PREFIX = u'[test]'
-#
-# EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = 'yjlove1314?'
 
 # REST FRAMEWORK PART
 

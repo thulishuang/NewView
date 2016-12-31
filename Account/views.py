@@ -10,9 +10,6 @@ from Room.models import *
 from NewView.settings import EMAIL_HOST, EMAIL_HOST_USER, \
     EMAIL_HOST_PASSWORD, SERVER_ADDR
 
-# Use request.session['status'] to record user status
-# Use request.session['username'] to record user name
-
 
 @api_view(['GET', 'POST'])
 def user_login(request):
@@ -53,6 +50,7 @@ def user_logout(request):
             'error_code': 1
         }, status=200)
 
+
 @api_view(['GET', 'POST'])
 def room_list(request):
     if request.method == "GET":
@@ -69,6 +67,7 @@ def room_list(request):
                     'num': r.id,
                     'title': r.title,
                     'description': r.description,
+                    'interviewer_name': r.interviewer_name,
                     'interviewer_email': r.interviewer_email,
                     'state': r.state
                 } for r in room_list
@@ -89,12 +88,14 @@ def room_list(request):
             'room_id': int(request.data['roomnum']),
             'title': request.data['title'],
             'description': request.data['description'],
+            'interviewer_name': request.data['interviewer_name'],
             'interviewer_email': request.data['interviewer_email']
         }
         room = Room.objects.get(pk=post_data['room_id'])
         try:
             room.title = post_data['title']
             room.description = post_data['description']
+            room.interviewer_name = post_data['interviewer_name']
             room.interviewer_email = post_data['interviewer_email']
             room.save()
             return Response(data={
@@ -126,17 +127,19 @@ def change_room(request):
 def interviewee_list(request):
     if request.method == 'GET':
         user = request.user
-        index_table = IndexTable.objects.get(user_id=user.id)
+        all_rooms = Room.objects.filter(manager=user)
         data_list = []
-        for i in index_table.interviewee_list.all():
-            data_list.append({
-                'num': i.id,
-                'username': i.username,
-                'email': i.email,
-                'telephone': i.telephone,
-                'address': i.addr,
-                'state': i.state
-            })
+        for r in all_rooms:
+            for i in r.interviewees.all():
+                data_list.append({
+                    'num': i.id,
+                    'username': i.username,
+                    'email': i.email,
+                    'telephone': i.telephone,
+                    'address': i.addr,
+                    'state': i.state,
+                    'roomnum': r.id
+                })
         return Response(data={
             'interviewee_list': data_list
         }, status=200)
@@ -147,7 +150,8 @@ def interviewee_list(request):
             'username': request.data['username'],
             'email': request.data['email'],
             'telephone': request.data['telephone'],
-            'address': request.data['address']
+            'address': request.data['address'],
+            'roomnum': request.data['roomnum']
         }
         try:
             interviewee = Interviewee.objects.get(pk=post_data['num'])
@@ -169,9 +173,14 @@ def interviewee_list(request):
                 telephone=post_data['telephone'],
                 addr=post_data['address']
             )
+
             interviewee.save();
             index_table.interviewee_list.add(interviewee)
             index_table.save()
+
+            room = Room.objects.get(id=post_data['roomnum'])
+            room.interviewees.add(interviewee)
+            room.save()
             return Response(data={
                 'error_code': 0
             }, status=200)
@@ -192,12 +201,11 @@ def invite_interviewer(request):
         msg['To'] = receiver
         msg['Subject'] = room.title + "的面试通知"
         body = room.description + "\n请点击链接\n\t http://" + \
-               SERVER_ADDR + ":3000\#" + room.title + "\n\t 参与面试！"
+               SERVER_ADDR + ":3000/#/" + str(room.id) + "\n参与面试！"
         msg.attach(MIMEText(body, 'plain'))
 
         server = SMTP(EMAIL_HOST)
         server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-        server.starttls()
         server.sendmail(EMAIL_HOST_USER, receiver, msg.as_string())
         server.quit()
 
@@ -227,22 +235,20 @@ def delete_interviewee(request):
 
 @api_view((['POST']))
 def send_mail(request):
+    user = Interviewee.objects.get(id=request.data['userid'])
+    room = Room.objects.get(id=request.data['roomid'])
+    receiver = user.email
     try:
-        user = Interviewee.objects.get(id=request.data['userid'])
-        room = Room.objects.get(id=request.data['roomid'])
-        receiver = user.email
-
         msg = MIMEMultipart()
         msg['From'] = EMAIL_HOST_USER
         msg['To'] = receiver
         msg['Subject'] = room.title + "的面试通知"
         body = room.description + "\n请点击链接\n\t http://" + \
-               SERVER_ADDR + ":3000\#" + room.title + "\n\t 参与面试！"
+               SERVER_ADDR + ":3000/#/" + str(room.id) + "\n\t 参与面试！"
         msg.attach(MIMEText(body, 'plain'))
 
         server = SMTP(EMAIL_HOST)
         server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-        server.starttls()
         server.sendmail(EMAIL_HOST_USER, receiver, msg.as_string())
         server.quit()
 
