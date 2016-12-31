@@ -46,6 +46,7 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('client_editor', function(data) {
+		console.log(data);
     	if (prev_user === 0){
     		io.emit("server_editor", data);
     		prev_user = data.id;
@@ -85,7 +86,7 @@ setInterval(function(){
 		});
 		prev_operation = null;
 	}
-}, 1000);
+}, 2000);
 
 http.listen(4000, function(){
 	console.log('listening on *:4000');
