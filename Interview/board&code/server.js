@@ -46,7 +46,6 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('client_editor', function(data) {
-    	console.log(data);
     	if (prev_user === 0){
     		io.emit("server_editor", data);
     		prev_user = data.id;

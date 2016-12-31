@@ -28,10 +28,10 @@ socket.on('assign_id', function(data){
 });
 
 socket.on('server_editor', function(data) {
-    console.log("new content: " + data.content);
     if (data.id !== client_id){
         $('#editor').val(data.content);
         prev_content = data.content;
+        console.log("new content: " + data.content);
     }
 });
 
