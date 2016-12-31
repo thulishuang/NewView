@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>skyRTC聊天室Demo</title>
+	<script src="http://138.68.25.237:4000/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.event.drag-2.0.js"></script>
+	<link rel="stylesheet" href="style.css" />
+	<link href="utsukushi.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	<div id="header" style="font-size:26px;"><span style="color:#ffffff;">&nbsp&nbspNew<i style="color:#20a0ff;font-size:26px;">View</i></span></div>
+	<article><!-- our canvas will be inserted here--></article>
+	<div style="text-align:right">
+		<button style="font-size:26px">清空白板</button>
+	</div>
+	<textarea cols="40" rows="15" id="editor"></textarea>
+	<script type="text/javascript" src="client.js"></script>
+	<a href="http://138.68.25.237:3000"><img src="flag.png" id="switch"/></a>
+</body>
+</html>
